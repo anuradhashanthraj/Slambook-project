@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation with Environment Variable</title>
+    <style>
+        body {
+            font-family: 'Cursive', cursive;
+            font-size: 25px;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+            background-image: url('shared image.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: left center;
+            background-attachment: fixed;
+        }
+
+        h2 {
+            text-align: center;
+            color: black;
+            font-family: 'Cursive', cursive;
+            margin: 20px 0;
+            font-size: 4vh;
+            padding: 20px;
+        }
+
+        form {
+            width: 100%;
+            max-width: 900px;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            font-size: 2vh;
+            color: black;
+        }
+
+        .form-group {
+            width: 48%;
+            margin-bottom: 20px;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            display: block;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px 0;
+            border: none;
+            border-bottom: 2px solid #ccc;
+            outline: none;
+            background: none;
+            font-size: 25px; /* Larger font size while typing */
+            color: black;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: black;
+            cursor: pointer;
+            border: none;
+            width: 100%;
+            padding: 10px;
+            font-size: 25px; /* Maintain larger font size for the submit button */
+        }
+
+        input[type="submit"]:disabled {
+            background-color: lightslategray;
+            cursor: not-allowed;
+        }
+
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .form-group {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Friendship is the wine of life</h2>
+    <form id="userForm">
+        <div class="form-group">
+            <label for="name">Name: 👨‍👩‍👧</label>
+            <input type="text" id="name">
+            <span class="error" id="nameError"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="mobile">Mobile Number: 📞</label>
+            <input type="text" id="mobile">
+            <span class="error" id="mobileError"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="dob">Date of Birth: 📅</label>
+            <input type="date" id="dob">
+            <span class="error" id="dobError"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="address">Address: 🏡</label>
+            <textarea id="address" rows="4"></textarea>
+            <span class="error" id="addressError"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email">
+            <span class="error" id="emailError"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="instagram">Instagram ID:</label>
+            <input type="text" id="instagram">
+            <span class="error" id="instagramError"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="facebook">Facebook ID:</label>
+            <input type="text" id="facebook">
+            <span class="error" id="facebookError"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="food">Favourite Food: 🍜</label>
+            <input type="text" id="food">
+            <span class="error" id="foodError"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="colour">Favourite Colour: 🎨</label>
+            <input type="text" id="colour">
+            <span class="error" id="colourError"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="crush">Crush: 💏</label>
+            <input type="text" id="crush">
+            <span class="error" id="crushError"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="thoughts">Something in your mind about me: 💭</label>
+            <textarea id="thoughts" rows="4"></textarea>
+            <span class="error" id="thoughtsError"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="autograph">Autograph: ✍</label>
+            <input type="text" id="autograph">
+            <span class="error" id="autographError"></span>
+        </div>
+
+        <div class="form-group" style="width: 100%;">
+            <input type="submit" value="Submit" id="submitBtn" disabled>
+        </div>
+    </form>
+
+    <script>
+        const form = document.getElementById('userForm');
+        const submitBtn = document.getElementById('submitBtn');
+
+        const inputs = {
+            name: document.getElementById('name'),
+            mobile: document.getElementById('mobile'),
+            dob: document.getElementById('dob'),
+            address: document.getElementById('address'),
+            email: document.getElementById('email'),
+            instagram: document.getElementById('instagram'),
+            facebook: document.getElementById('facebook'),
+            food: document.getElementById('food'),
+            colour: document.getElementById('colour'),
+            crush: document.getElementById('crush'),
+            thoughts: document.getElementById('thoughts'),
+            autograph: document.getElementById('autograph')
+        };
+
+        const errors = {
+            name: document.getElementById('nameError'),
+            mobile: document.getElementById('mobileError'),
+            dob: document.getElementById('dobError'),
+            address: document.getElementById('addressError'),
+            email: document.getElementById('emailError'),
+            instagram: document.getElementById('instagramError'),
+            facebook: document.getElementById('facebookError'),
+            food: document.getElementById('foodError'),
+            colour: document.getElementById('colourError'),
+            crush: document.getElementById('crushError'),
+            thoughts: document.getElementById('thoughtsError'),
+            autograph: document.getElementById('autographError')
+        };
+
+        function validateField(field, regex, errorMessage) {
+            if (!regex.test(field.value.trim())) {
+                errors[field.id].textContent = errorMessage;
+                return false;
+            } else {
+                errors[field.id].textContent = '';
+                return true;
+            }
+        }
+
+        function validateForm() {
+            let valid = true;
+
+            // Validate specific fields
+            valid = validateField(inputs.name, /^[a-zA-Z\s]+$/, 'Name must only contain letters') && valid;
+            valid = validateField(inputs.mobile, /^[0-9]{10}$/, 'Mobile number must be 10 digits') && valid;
+            valid = validateField(inputs.email, /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/, 'Invalid email format') && valid;
+
+            // Check if required fields are filled without showing specific error messages
+            for (let key in inputs) {
+                if (inputs[key].value.trim() === '') {
+                    valid = false; // Mark form as invalid
+                }
+            }
+
+            submitBtn.disabled = !valid;
+
+            return valid;
+        }
+
+        // Handle form submission
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            if (validateForm()) {
+                window.location.href = 'thankyou.html'; // Redirect if valid
+            } else {
+                console.log('Form validation failed.');
+            }
+        });
+
+        // Enable submit button if all fields are filled correctly
+        Object.values(inputs).forEach(input => {
+            input.addEventListener('input', validateForm);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: slamboook-and-mongodb-deployment
+  namespace: slambook-and-mongodb-namespace-ns
+spec:
+  template:
+    metadata:
+      labels:
+        app: web-slambook-and-mongodb
+    spec:
+      containers:
+        - name: slambook-container
+          image: anusocial123/slambook-service-web:v1
+          ports:
+            - containerPort: 3099
+  replicas: 2
+  selector:
+    matchLabels:
+       
