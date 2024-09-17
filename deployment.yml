@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: slamboook-and-mongodb-deployment
-  namespace: slambook-and-mongodb-namespace-ns
 spec:
   template:
     metadata:
