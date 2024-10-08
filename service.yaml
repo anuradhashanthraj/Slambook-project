@@ -4,9 +4,9 @@ metadata:
   name: slambook-service
 spec:
   selector:
-    app: web-slambook-and-mongodb
+    app: slambook-deployment
   ports:
     - port: 3000
       targetPort: 3099
       protocol: TCP
-  type: LoadBalancer
+  type: ClusterIP
